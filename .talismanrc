@@ -1,0 +1,8 @@
+fileignoreconfig:
+- filename: src/data.js
+  checksum: d3846adb8475157370295ec3214b91eb7ad1c05fe0f4cb6ff4d79f940d9bba38
+- filename: package-lock.json
+  checksum: d07bc1b817a85e2da42201e7c82e84a6a24e325336f1903386373a052435bb57
+- filename: src/main.js
+  checksum: a6e005e78cc1205af07229307c3112e528dc090c21b98a80c91d9715d488b963
+version: "1.0"
