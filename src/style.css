@@ -1,13 +1,14 @@
 :root {
   --bg: #030712;
-  --text: #e2e8f0;
-  --muted: #94a3b8;
+  --text: #f8fafc;
+  --muted: #cbd5e1; /* body copy: bright enough to read over the 3D scene */
+  --subtle: #a5b4c8; /* small labels, dates, hints */
   --cyan: #22d3ee;
-  --purple: #a855f7;
+  --purple: #c084fc;
   --green: #4ade80;
   --amber: #fbbf24;
-  --panel: rgba(3, 7, 18, 0.62);
-  --border: rgba(34, 211, 238, 0.18);
+  --panel: rgba(5, 9, 22, 0.86);
+  --border: rgba(125, 211, 252, 0.22);
   --mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
@@ -85,7 +86,10 @@ body.no-webgl #scene {
   justify-content: space-between;
   align-items: center;
   padding: 1.1rem 6vw;
-  background: linear-gradient(to bottom, rgba(3, 7, 18, 0.85), transparent);
+  background: rgba(3, 7, 18, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
   font-family: var(--mono);
   font-size: 0.85rem;
 }
@@ -98,7 +102,7 @@ body.no-webgl #scene {
   gap: 1.6rem;
 }
 .nav nav a {
-  color: var(--muted);
+  color: #dbe4ef;
   transition: color 0.2s;
 }
 .nav nav a::before {
@@ -191,9 +195,11 @@ main {
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 2.2rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 70px rgba(0, 0, 0, 0.6);
 }
 .panel.wide {
   max-width: 760px;
@@ -201,6 +207,11 @@ main {
 .panel p {
   color: var(--muted);
   margin-bottom: 1rem;
+}
+/* Top-level body copy only; classed labels (.eyebrow, .job-period) and card text keep their own sizes */
+.panel > p:not([class]) {
+  font-size: 1.02rem;
+  line-height: 1.7;
 }
 
 .reveal {
@@ -229,13 +240,26 @@ main {
 }
 
 /* ── Hero ─────────────────────────────────────────── */
+/* Soft dark scrim behind the hero copy so it reads over the 3D cluster */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 75% at 22% 50%, rgba(3, 7, 18, 0.85), rgba(3, 7, 18, 0.5) 55%, transparent 80%);
+}
 .hero {
+  position: relative;
   max-width: 620px;
 }
 .hero h1 {
   font-size: clamp(2.6rem, 6vw, 4.6rem);
   font-weight: 800;
   line-height: 1.05;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+.hero h1 .grad {
+  text-shadow: none; /* a shadow shows through background-clipped text and muddies the gradient */
 }
 .grad {
   background: linear-gradient(90deg, var(--cyan), var(--purple), #fb7185, var(--cyan));
@@ -260,6 +284,9 @@ main {
 .lead {
   color: var(--muted);
   max-width: 520px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
 }
 .scroll-hint {
   position: absolute;
@@ -267,8 +294,8 @@ main {
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.78rem;
+  color: var(--subtle);
   animation: bob 2s ease-in-out infinite;
 }
 @keyframes bob {
@@ -283,9 +310,11 @@ main {
   font-size: 0.85rem;
   margin: 1.5rem 0;
   padding: 1rem 1.2rem;
-  background: rgba(3, 7, 18, 0.75);
+  background: rgba(3, 7, 18, 0.9);
   border: 1px solid var(--border);
   border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   min-height: 10.5em;
   overflow-x: auto;
 }
@@ -293,7 +322,7 @@ main {
   color: var(--green);
 }
 .t-out {
-  color: var(--muted);
+  color: #d5dde8;
   white-space: pre-wrap;
   margin-bottom: 0.3rem;
 }
@@ -372,9 +401,9 @@ main {
   font-size: 0.85rem;
   padding: 0.75rem 1.3rem;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(125, 211, 252, 0.35);
   color: var(--text);
-  background: rgba(3, 7, 18, 0.6);
+  background: rgba(3, 7, 18, 0.85);
   transition: all 0.2s;
 }
 .btn:hover {
@@ -395,11 +424,11 @@ main {
 }
 .chip {
   font-family: var(--mono);
-  font-size: 0.72rem;
-  padding: 0.2rem 0.6rem;
+  font-size: 0.76rem;
+  padding: 0.22rem 0.65rem;
   border-radius: 999px;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.2);
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.28);
   color: var(--text);
 }
 
@@ -424,8 +453,8 @@ main {
 }
 .stat span {
   font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.78rem;
+  color: var(--subtle);
 }
 
 /* ── Skills ───────────────────────────────────────── */
@@ -502,13 +531,15 @@ main {
 }
 .job-period {
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--subtle) !important;
   margin-bottom: 0.5rem !important;
 }
 .job ul {
   margin: 0 0 0.7rem 1.1rem;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
 }
 .job li::marker {
   color: var(--cyan);
@@ -526,7 +557,7 @@ main {
   padding: 1.2rem;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: rgba(3, 7, 18, 0.5);
+  background: rgba(15, 23, 42, 0.55);
   color: var(--text);
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
@@ -544,7 +575,8 @@ main {
   color: var(--cyan);
 }
 .project p {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
   flex: 1;
 }
 
@@ -555,8 +587,8 @@ main {
 .contact footer {
   margin-top: 1.6rem;
   font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--muted);
+  font-size: 0.76rem;
+  color: var(--subtle);
 }
 
 /* ── Responsive ───────────────────────────────────── */
@@ -582,7 +614,7 @@ main {
   .hero {
     padding: 1.5rem;
     border-radius: 18px;
-    background: rgba(3, 7, 18, 0.55);
+    background: rgba(3, 7, 18, 0.8);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
@@ -622,7 +654,7 @@ main {
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(3, 7, 18, 0.6);
+  background: rgba(3, 7, 18, 0.85);
   color: var(--muted);
 }
 .badge.open {
@@ -702,7 +734,7 @@ main {
   width: max-content;
   font-family: var(--mono);
   font-size: 0.85rem;
-  color: rgba(148, 163, 184, 0.7);
+  color: var(--subtle);
   animation: marquee 40s linear infinite;
 }
 .ticker-track span::before {
@@ -725,7 +757,7 @@ main {
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.09), rgba(168, 85, 247, 0.05) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.05), rgba(168, 85, 247, 0.03) 40%, transparent 70%);
   mix-blend-mode: screen;
 }
 
@@ -748,8 +780,8 @@ main {
 }
 .edu span {
   font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.78rem;
+  color: var(--subtle);
 }
 
 /* ── AI section ───────────────────────────────────── */
@@ -806,7 +838,7 @@ main {
   padding: 1.1rem 1.2rem;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: rgba(3, 7, 18, 0.55);
+  background: rgba(15, 23, 42, 0.55);
   transition: border-color 0.2s, transform 0.2s;
 }
 .ai-card:hover {
@@ -832,7 +864,7 @@ main {
   font-size: 1rem;
 }
 .ai-card p {
-  font-size: 0.88rem;
+  font-size: 0.93rem;
   margin: 0.25rem 0 0.6rem !important;
 }
 .flow {
@@ -841,13 +873,14 @@ main {
   align-items: center;
   gap: 0.35rem;
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.74rem;
 }
 .flow span {
   padding: 0.15rem 0.5rem;
   border-radius: 6px;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.2);
+  color: #e2e8f0;
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.28);
 }
 .flow i {
   font-style: normal;
@@ -891,7 +924,7 @@ main {
 /* Phones: 3D sits behind the text, so make panels more solid for readability */
 @media (max-width: 860px) {
   .panel {
-    background: rgba(3, 7, 18, 0.84);
+    background: rgba(3, 7, 18, 0.9);
   }
 }
 

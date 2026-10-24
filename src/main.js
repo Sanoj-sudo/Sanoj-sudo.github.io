@@ -34,7 +34,7 @@ const KEYFRAMES = {
   skills: { pos: v3(0, 8, -50), look: SKILLS_POS, shift: -0.25, show: ['skills'] },
   experience: { pos: v3(10, 2, -90), look: PIPELINE_POS, shift: 0.24, show: ['pipeline'] },
   projects: { pos: v3(0, 3, -139), look: GLOBE_POS, shift: -0.27, show: ['globe'] },
-  contact: { pos: v3(0, 10, -146), look: v3(0, 14, -173), shift: 0, show: ['globe'] }, // globe as a horizon below the card
+  contact: { pos: v3(8, 5, -141), look: GLOBE_POS, shift: -0.25, show: ['globe'] }, // full globe beside the card, seen from a new angle
 };
 const INTRO_FROM = v3(0, 45, 75); // camera swoops in from here after the loader
 
@@ -52,6 +52,7 @@ function initScene() {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.85; // slightly dimmer scene so the text panels stand out
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(COLORS.bg);
@@ -86,7 +87,8 @@ function initScene() {
   // ── Post-processing (bloom for the neon look) ─────────
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.9, 0.5, 0.75);
+  // Kept soft (strength, radius, threshold) so glows don't wash out text over the scene
+  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.5, 0.35, 0.85);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
