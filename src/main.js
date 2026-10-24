@@ -34,7 +34,7 @@ const KEYFRAMES = {
   skills: { pos: v3(0, 8, -50), look: SKILLS_POS, shift: -0.25, show: ['skills'] },
   experience: { pos: v3(10, 2, -90), look: PIPELINE_POS, shift: 0.24, show: ['pipeline'] },
   projects: { pos: v3(0, 3, -139), look: GLOBE_POS, shift: -0.27, show: ['globe'] },
-  contact: { pos: v3(8, 5, -141), look: GLOBE_POS, shift: -0.25, show: ['globe'] }, // full globe beside the card, seen from a new angle
+  contact: { pos: v3(-8, 5, -141), look: GLOBE_POS, shift: 0.25, show: ['globe'] }, // full globe beside the card, seen from a new angle
 };
 const INTRO_FROM = v3(0, 45, 75); // camera swoops in from here after the loader
 
